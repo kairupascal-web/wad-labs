@@ -53,25 +53,48 @@ const services = [
         name: "Body Wash",
         description: "Complete exterior body cleaning.",
         price: "KSh 500",
-        image: "images/body-wash.jpg"
+        
     },
     {
         name: "Engine Cleaning",
         description: "Professional engine cleaning service.",
         price: "KSh 800",
-        image: "images/engine-cleaning.jpg"
+        
     },
     {
         name: "Interior Detailing",
         description: "Deep interior vacuuming and detailing.",
         price: "KSh 1500",
-        image: "images/interior-detailing.jpg"
+        
     },
     {
         name: "Waxing",
         description: "Protect your paint with premium wax.",
         price: "KSh 1200",
-        image: "images/waxing.jpg"
+        
+    },
+    {
+        name:"carpet cleaning",
+        description:"cleaning of house carpets",
+        price:"KSh 1000"
+    },
+    {
+        name:"bufferring",
+        description:"polishing of car body",
+        price:"KSh 1500"
+    },
+   
+    
+    {
+        name:"car perfumes",
+        description:"installation of car perfumes",
+        price:"KSh 500"
+    },
+    {
+        name:"fire extinguisher ",
+        description:"installation of fire extinguisher in car",
+        price:"KSh 1000"
+
     }
 ];
 
@@ -124,7 +147,6 @@ function showFeedback(message, isError = true) {
     }
 });
 
-console.log("===== DOM ACCESS =====");
 console.log(heading);
 console.log(sections);
 console.log(images);
