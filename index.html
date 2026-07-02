@@ -78,7 +78,7 @@
         
         <section id="about" name="about">
             <h2>About us</h2>
-            <p> <b>JUJU CARWASH</b>  is a carwash located in kinanda road opposite Kihara ACK diocese which was established by Judy Gathongo in 2020 .
+            <p> <b>JUJU CARWASH</b>  is a carwash located in kinanda road opposite Kihara ACK diocese .
             </p>
             <img src="c:\Users\ngang\Downloads\WhatsApp Image 2026-05-28 at 19.20.23.jpeg" id="ownerImage" alt="Owner image">
             <p id="ownerInfo"></p>
@@ -98,23 +98,10 @@
         <section id="features">
             <h2>Features</h2>
             <h5 id="services">SERVICES</h5>
+            <ul id="servicesList"></ul>
+            <img src="{service.image}" alt="{service.name}">
+             <div id="servicesContainer" class="services-grid"></div>
             
-            <ul>
-                <li> engine cleaning</li> <!-- list item -->
-                <li>body wash</li>
-                <li>vaccuum cleaning</li>
-                <li>interior detail
-                    <img src="c:\Users\ngang\Downloads\WhatsApp Image 2026-05-28 at 19.20.23 (1).jpeg">
-                </li>
-
-                <li>carpet cleaning</li>
-                <li>waxing</li>
-                <li>water max removal</li>
-                <li>buffering</li>
-                <li>rim cleaning
-                    <img src="c:\Users\ngang\Downloads\WhatsApp Image 2026-05-28 at 19.20.22.jpeg">
-                </li> 
-            </ul> 
             
             <h5 id="car-accessories">CAR ACCESSORIES</h5>
             <ul>
@@ -137,16 +124,19 @@
             </div>
             <div class="form-group">
                 <label id="customer">customer</label>
-                <input type="radio" name ="customer" value="0">car owner
-                <input type="radio" name ="customer" value="1">car wash attendant
-                <input type="radio" name ="customer" value="2">carpet owner
+                <input type="radio" name="customer" value="0">car owner
+                <input type="radio" name="customer" value="1">car wash attendant
+                <input type="radio" name="customer" value="2">carpet owner
             </div>
             <div class="form-group">
                 <label for="review">Review:</label>
                 <textarea id="review" name="review"></textarea>
+                <p id="inputFeedback" class="feedback-message"></p>
+                <div id="counter">0 characters</div>
             </div>
+            <button type="button" id="reviewSubmitBtn">Submit</button>
+            <button type="button" id="reviewDeleteBtn">Delete</button>
         
-            <button onclick="alert('THANK YOU FOR YOUR FEEDBACK!')">submit </button>
         </section>
            <!-- REVIEWS SECTION -->
     <section id="reviews">
@@ -190,11 +180,8 @@
     
    
     <footer>
-
-        
         <hr>
-        <p> © 2026 JUJU  CARWASH</p>
-        
+        <p>© <span id="footerYear"></span> JUJU CARWASH</p>
     </footer>
     <script src="js/script.js" type="text/javascript"></script>
 </body>

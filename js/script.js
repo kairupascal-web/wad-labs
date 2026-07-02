@@ -30,6 +30,9 @@ let carWashAttendants = [
     "Faith",
     "Mercy"
 ];
+console.log(carWashAttendants[2]); 
+console.log(carWashAttendants.length);
+
 
 let carpetCleaningStaff = [
     [1, "Kevin", "Carpet Owner"],
@@ -37,20 +40,61 @@ let carpetCleaningStaff = [
     [3, "David", "Car Owner"]
 ];
 console.log(carpetCleaningStaff[1][1]); // Output: Sarah
+console.log(carpetCleaningStaff[2][2]);
+console.log(carpetCleaningStaff[0][0]);
 // Welcome message
 window.onload = function () {
     alert("WELCOME TO JUJU CARWASH!");
-    event.preventDefault();
 };
 
 
-const services = (
-    {name:"Body Wash", price:"KSh 500"},
-    {name:"Engine Cleaning", price:"KSh 800"},
-    {name:"Interior Detailing", price:"KSh 1500"},
-    {name:"Waxing", price:"KSh 1200"}
-);
+const services = [
+    {
+        name: "Body Wash",
+        description: "Complete exterior body cleaning.",
+        price: "KSh 500",
+        image: "images/body-wash.jpg"
+    },
+    {
+        name: "Engine Cleaning",
+        description: "Professional engine cleaning service.",
+        price: "KSh 800",
+        image: "images/engine-cleaning.jpg"
+    },
+    {
+        name: "Interior Detailing",
+        description: "Deep interior vacuuming and detailing.",
+        price: "KSh 1500",
+        image: "images/interior-detailing.jpg"
+    },
+    {
+        name: "Waxing",
+        description: "Protect your paint with premium wax.",
+        price: "KSh 1200",
+        image: "images/waxing.jpg"
+    }
+];
 
+
+const container = document.getElementById("servicesContainer");
+
+if (container) {
+    services.forEach(service => {
+        const card = document.createElement("div");
+        card.className = "service-card";
+        card.innerHTML = `
+            <div class="service-title">
+                <h3>${service.name}</h3>
+            </div>
+            <div class="service-info">
+                <p>${service.description}</p>
+                <h2 class="service-price">${service.price}</h2>
+                <button>Book Service</button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
 // Get DOM elements
 const heading = document.getElementById("mainHeading");
 const sections = document.querySelectorAll("section");
@@ -146,6 +190,19 @@ if (submitBtn) {
     });
 }
 
+const reviewDeleteBtn = document.getElementById("reviewDeleteBtn");
+if (reviewDeleteBtn) {
+    reviewDeleteBtn.addEventListener("click", function () {
+        if (nameInput) nameInput.value = "";
+        if (emailInput) emailInput.value = "";
+        if (reviewInput) reviewInput.value = "";
+        if (feedbackMessage) feedbackMessage.textContent = "";
+        if (counter) counter.textContent = "0 characters";
+        document.querySelectorAll('input[name="customer"]').forEach(function (radio) {
+            radio.checked = false;
+        });
+    });
+}
 
 
 document.addEventListener("keydown", function (event) {
@@ -155,42 +212,32 @@ document.addEventListener("keydown", function (event) {
 });
 
 //smooth scrolling for navigation links
-const navLinks = document.querySelectorAll("nav a");
-
-navLinks.forEach(function (link) {
-    link.addEventListener("click", function (event) {
+document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", event => {
         event.preventDefault();
-
-        const target = document.querySelector(this.getAttribute("href"));
-        if (target) {
-            target.scrollIntoView({
-                behavior: "smooth"
-            });
-        }
+        const target = document.querySelector(link.getAttribute("href"));
+        if (target) target.scrollIntoView({ behavior: "smooth" });
     });
 });
 
-const galleryImages = document.querySelectorAll(".gallery-image");
-galleryImages.forEach(function (image) {
-    image.addEventListener("mouseover", function () {
+document.querySelectorAll(".gallery-image").forEach(image => {
+    image.addEventListener("mouseover", () => {
         image.style.transform = "scale(1.05)";
-        image.style.transition = "0.3s";
     });
-
-    image.addEventListener("mouseout", function () {
+    image.addEventListener("mouseout", () => {
         image.style.transform = "scale(1)";
     });
 });
 
 
-
- footer = document.querySelector("footer p");
-if (footer) {
-    footer.textContent = "© " + new Date().getFullYear() + " JUJU CARWASH";
+// dynamically update year
+const footerYear = document.getElementById("footerYear");
+if (footerYear) {
+    footerYear.textContent = new Date().getFullYear();
 }
 
 const review = document.getElementById("review");
-const counter = document.getElementByIdconst("counter");
+const counter = document.getElementById("counter");
 
 if (review && counter) {
     review.addEventListener("input", function () {
