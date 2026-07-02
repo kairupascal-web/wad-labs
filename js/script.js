@@ -186,29 +186,22 @@ images.forEach(function (image) {
 
 if (submitBtn) {
     submitBtn.addEventListener("click", function () {
+        const requiredFields = [nameInput, emailInput, reviewInput];
+        const hasEmptyField = requiredFields.some(input => !input || input.value.trim() === "");
 
-        if (
-            nameInput.value.trim() === "" ||
-            emailInput.value.trim() === "" ||
-            reviewInput.value.trim() === ""
-        ) {
-
+        if (hasEmptyField) {
             showFeedback("Please fill in all the fields before submitting.");
             return;
         }
 
-        showFeedback("Thank you " + nameInput.value.trim() + "! Your review has been received.", false);
-
-        // Clear form
-        nameInput.value = "";
-        emailInput.value = "";
-        reviewInput.value = "";
-
-        // Clear radio buttons
-        document.querySelectorAll('input[name="customer"]').forEach(function (radio) {
-            radio.checked = false;
+        showFeedback(`Thank you ${nameInput.value.trim()}! Your review has been received.`, false);
+        requiredFields.forEach(input => {
+            if (input) input.value = "";
         });
 
+        document.querySelectorAll('input[name="customer"]').forEach(radio => {
+            radio.checked = false;
+        });
     });
 }
 
