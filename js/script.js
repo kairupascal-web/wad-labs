@@ -1,25 +1,4 @@
-const ownerImage = document.getElementById("ownerImage");
-const ownerInfo = document.getElementById("ownerInfo");
-const images = document.querySelectorAll("img");
 
-// Only run owner-bio logic when the related elements exist to avoid runtime errors
-if (ownerInfo && localStorage.getItem("ownerBio") === "show") {
-    ownerInfo.textContent = "Founder: Judy Gathongo. Established JUJU CARWASH in 2020.";
-}
-
-if (ownerImage && ownerInfo) {
-    ownerImage.addEventListener("click", function () {
-        if (localStorage.getItem("ownerBio") === "show") {
-            ownerInfo.textContent = "";
-            localStorage.removeItem("ownerBio");
-        } else {
-            ownerInfo.textContent = "Founder: Judy Gathongo. Established JUJU CARWASH in 2020.";
-            localStorage.setItem("ownerBio", "show");
-        }
-
-    });
-    console.log("Owner bio toggle functionality initialized.");
-}
 
 let client = {
     name: "John Doe",
@@ -145,9 +124,20 @@ if (container) {
             <div class="service-info">
                 <p>${service.description}</p>
                 <h2 class="service-price">${service.price}</h2>
-                <button>Book Service</button>
+                <div class="service-actions">
+                    <button type="button">Book Service</button>
+                    <button type="button" class="remove-service-btn">Cancel Service</button>
+                </div>
             </div>
         `;
+
+        const cancelButton = card.querySelector(".remove-service-btn");
+        if (cancelButton) {
+            cancelButton.addEventListener("click", function () {
+                card.remove();
+            });
+        }
+
         container.appendChild(card);
     });
 }
@@ -160,19 +150,23 @@ if (serviceSelect) {
         serviceSelect.appendChild(option);
     });
 }
+let helperButton = null;
 let createElement = function(){
-    button = document.createElement("button");
-    button.innerHTML = "Book Service";
-    button.style.backgroundColor = "blue";
-    button.style.color = "white";
-    button.style.padding = "10px 20px";
-    button.style.border = "none";
-    button.style.borderRadius = "5px";
-    button.style.cursor = "pointer";
+    helperButton = document.createElement("button");
+    helperButton.innerHTML = "Book Service";
+    helperButton.style.backgroundColor = "blue";
+    helperButton.style.color = "white";
+    helperButton.style.padding = "10px 20px";
+    helperButton.style.border = "none";
+    helperButton.style.borderRadius = "5px";
+    helperButton.style.cursor = "pointer";
+    return helperButton;
 
 }
 let removeElement = function(){
-    button.remove();
+    if (helperButton && helperButton.isConnected) {
+        helperButton.remove();
+    }
 }
 // Get DOM elements
 const heading = document.getElementById("mainHeading");
@@ -275,4 +269,50 @@ if (submitBtn) {
         console.log("Form submitted successfully.");
     });
 }
+
+const reviewDeleteBtn = document.getElementById("reviewDeleteBtn");
+if (reviewDeleteBtn) {
+    reviewDeleteBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (nameInput) nameInput.value = "";
+        if (emailInput) emailInput.value = "";
+        if (reviewInput) reviewInput.value = "";
+        if (serviceSelect) serviceSelect.value = "";
+        if (feedbackMessage) feedbackMessage.textContent = "";
+        if (counter) counter.textContent = "0 characters";
+        customerRadios.forEach(function (radio) {
+            radio.checked = false;
+        });
+        console.log("Form cleared.");
+    });
+}
+
+
+document.addEventListener("keydown", function (event) {
+
+    console.log("Key Pressed: " + event.key);
+
+});
+
+//smooth scrolling for navigation links
+document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", event => {
+        event.preventDefault();
+        const target = document.querySelector(link.getAttribute("href"));
+        if (target) target.scrollIntoView({ behavior: "smooth" });
+    });
+    console.log("Smooth scrolling added for link:", link.href);
+});
+
+document.querySelectorAll(".gallery-image").forEach(image => {
+    image.addEventListener("mouseover", () => {
+        image.style.transform = "scale(1.05)";
+    });
+    image.addEventListener("mouseout", () => {
+        image.style.transform = "scale(1)";
+    });
+    console.log("Hover effect added to image:", image.src);
+});
+
+const images = document.querySelectorAll("img");
 
