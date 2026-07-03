@@ -22,6 +22,22 @@
                         <option value="">Select a service</option>
                     </select>
                 </div>
+                <div class="form-group actions-row">
+                    <button type="button" id="removeSelectedBtn">Remove Selected Service</button>
+                </div>
+                <div class="form-group add-service-form">
+                    <label for="newServiceName">Service Name:</label>
+                    <input id="newServiceName" type="text" placeholder="e.g. Tire Shine">
+
+                    <label for="newServiceDescription">Description:</label>
+                    <input id="newServiceDescription" type="text" placeholder="e.g. Shine and protect tires.">
+
+                    <label for="newServicePrice">Price:</label>
+                    <input id="newServicePrice" type="text" placeholder="e.g. KSh 400">
+
+                    <button type="button" id="addServiceBtn">Add Service</button>
+                </div>
+                <p id="serviceFeedback" class="service-feedback"></p>
             </div>
         </section>
     </main>
