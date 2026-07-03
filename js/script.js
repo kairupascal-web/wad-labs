@@ -60,6 +60,8 @@ const feedbackMessage = document.getElementById("inputFeedback");
 const counter = document.getElementById("counter");
 const customerRadios = document.querySelectorAll('input[name="customer"]');
 const reviewDeleteBtn = document.getElementById("reviewDeleteBtn");
+const ownerImage = document.getElementById("ownerImage");
+const ownerInfo = document.getElementById("ownerInfo");
 
 function showFeedback(message, isError = true) {
     if (!serviceFeedback) return;
@@ -257,6 +259,13 @@ if (reviewDeleteBtn) {
         customerRadios.forEach(function (radio) {
             radio.checked = false;
         });
+    });
+}
+
+if (ownerImage && ownerInfo) {
+    ownerImage.addEventListener("click", function () {
+        const isHidden = ownerInfo.style.display === "" || ownerInfo.style.display === "none";
+        ownerInfo.style.display = isHidden ? "block" : "none";
     });
 }
 
