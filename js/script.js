@@ -1,4 +1,5 @@
 
+const images = document.querySelectorAll("img");
 
 let client = {
     name: "John Doe",
@@ -314,5 +315,21 @@ document.querySelectorAll(".gallery-image").forEach(image => {
     console.log("Hover effect added to image:", image.src);
 });
 
-const images = document.querySelectorAll("img");
+const ownerImage = document.getElementById("ownerImage");
+const ownerInfo = document.getElementById("ownerInfo");
+
+
+if (ownerImage && ownerInfo) {
+    ownerImage.addEventListener("click", function () {
+        if (localStorage.getItem("ownerBio") === "show") {
+            ownerInfo.textContent = "";
+            localStorage.removeItem("ownerBio");
+        } else {
+            ownerInfo.textContent = "Founder: Judy Gathongo. Established JUJU CARWASH in 2020.";
+            localStorage.setItem("ownerBio", "show");
+        }
+
+    });
+    console.log("Owner bio toggle functionality initialized.");
+}
 
