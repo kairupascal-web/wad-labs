@@ -331,3 +331,53 @@ if (reviewDeleteBtn) {
         console.log("Form cleared.");
     });
 }
+
+
+document.addEventListener("keydown", function (event) {
+
+    console.log("Key Pressed: " + event.key);
+
+});
+
+//smooth scrolling for navigation links
+document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", event => {
+        event.preventDefault();
+        const target = document.querySelector(link.getAttribute("href"));
+        if (target) target.scrollIntoView({ behavior: "smooth" });
+    });
+    console.log("Smooth scrolling added for link:", link.href);
+});
+
+document.querySelectorAll(".gallery-image").forEach(image => {
+    image.addEventListener("mouseover", () => {
+        image.style.transform = "scale(1.05)";
+    });
+    image.addEventListener("mouseout", () => {
+        image.style.transform = "scale(1)";
+    });
+    console.log("Hover effect added to image:", image.src);
+});
+const ownerImage = document.getElementById("ownerImage");
+const ownerInfo = document.getElementById("ownerInfo");
+
+// Only run owner-bio logic when the related elements exist to avoid runtime errors
+if (ownerInfo && localStorage.getItem("ownerBio") === "show") {
+    ownerInfo.textContent = "Founder: Judy Gathongo. Established JUJU CARWASH in 2020.";
+}
+
+if (ownerImage && ownerInfo) {
+    ownerImage.addEventListener("click", function () {
+        if (localStorage.getItem("ownerBio") === "show") {
+            ownerInfo.textContent = "";
+            localStorage.removeItem("ownerBio");
+        } else {
+            ownerInfo.textContent = "Founder: Judy Gathongo. Established JUJU CARWASH in 2020.";
+            localStorage.setItem("ownerBio", "show");
+        }
+
+        
+    });
+    console.log("Owner bio toggle functionality initialized.");
+}
+
