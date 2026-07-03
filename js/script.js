@@ -167,3 +167,97 @@ let removeElement = function(){
     const button = document.querySelector("button");
     if (button) button.remove();
 }
+// Get DOM elements
+const heading = document.getElementById("mainHeading");
+const sections = document.querySelectorAll("section");
+
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const reviewInput = document.getElementById("review");
+const submitBtn = document.getElementById("reviewSubmitBtn");
+const feedbackMessage = document.getElementById("inputFeedback");
+const counter = document.getElementById("counter");
+const customerRadios = document.querySelectorAll('input[name="customer"]');
+
+const REVIEW_DRAFT_KEY = "reviewFormDraft";
+
+function showFeedback(message, isError = true) {
+    if (feedbackMessage) {
+        feedbackMessage.textContent = message;
+        feedbackMessage.style.color = isError ? "red" : "green";
+        feedbackMessage.style.fontWeight = "bold";
+    }
+}
+
+[nameInput, emailInput, reviewInput].forEach(function (input) {
+    if (input) {
+        input.addEventListener("input", function () {
+            if (feedbackMessage && feedbackMessage.textContent !== "") {
+                feedbackMessage.textContent = "";
+            }
+            saveFormDraft();
+        });
+    }
+});
+
+if (serviceSelect) {
+    serviceSelect.addEventListener("change", function () {
+        if (feedbackMessage && feedbackMessage.textContent !== "") {
+            feedbackMessage.textContent = "";
+        }
+        saveFormDraft();
+    });
+}
+
+customerRadios.forEach(function (radio) {
+    radio.addEventListener("change", function () {
+        if (feedbackMessage && feedbackMessage.textContent !== "") {
+            feedbackMessage.textContent = "";
+        }
+        saveFormDraft();
+    });
+});
+
+if (reviewInput && counter) {
+    counter.textContent = reviewInput.value.length + " characters";
+    reviewInput.addEventListener("input", function () {
+        counter.textContent = reviewInput.value.length + " characters";
+    });
+}
+
+function getSelectedCustomerValue() {
+    const selected = document.querySelector('input[name="customer"]:checked');
+    return selected ? selected.value : "";
+}
+
+function saveFormDraft() {
+    const draft = {
+        name: nameInput ? nameInput.value : "",
+        email: emailInput ? emailInput.value : "",
+        review: reviewInput ? reviewInput.value : "",
+        service: serviceSelect ? serviceSelect.value : "",
+        customer: getSelectedCustomerValue()
+    };
+    localStorage.setItem(REVIEW_DRAFT_KEY, JSON.stringify(draft));
+}
+
+function loadFormDraft() {
+    const saved = localStorage.getItem(REVIEW_DRAFT_KEY);
+    if (!saved) return;
+
+    try {
+        const draft = JSON.parse(saved);
+        if (nameInput) nameInput.value = draft.name || "";
+        if (emailInput) emailInput.value = draft.email || "";
+        if (reviewInput) reviewInput.value = draft.review || "";
+        if (serviceSelect) serviceSelect.value = draft.service || "";
+        customerRadios.forEach(radio => {
+            radio.checked = (radio.value === (draft.customer || ""));
+        });
+        if (counter && reviewInput) {
+            counter.textContent = reviewInput.value.length + " characters";
+        }
+    } catch (error) {
+        localStorage.removeItem(REVIEW_DRAFT_KEY);
+    }
+}
