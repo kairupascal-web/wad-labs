@@ -261,3 +261,73 @@ function loadFormDraft() {
         localStorage.removeItem(REVIEW_DRAFT_KEY);
     }
 }
+
+loadFormDraft();
+
+console.log(heading);
+console.log(sections);
+console.log(images);
+
+
+
+
+
+// Change heading colour when clicked
+if (heading) {
+    heading.addEventListener("click", function () {
+        heading.style.color = "blue";
+    });
+}
+
+
+
+if (submitBtn) {
+    submitBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        const requiredFields = [nameInput, emailInput, reviewInput];
+        const hasEmptyField = requiredFields.some(input => !input || input.value.trim() === "");
+        const selectedService = serviceSelect ? serviceSelect.value : "";
+        const selectedCustomer = getSelectedCustomerValue();
+
+        if (hasEmptyField || selectedService.trim() === "" || selectedCustomer === "") {
+            showFeedback("Please fill in all fields and select service + customer type before submitting.");
+            return;
+        }
+
+        if (emailInput && !emailInput.checkValidity()) {
+            showFeedback("Please enter a valid email address.");
+            return;
+        }
+
+        showFeedback(`Thank you ${nameInput.value.trim()}! Your review for ${selectedService} has been received.`, false);
+        requiredFields.forEach(input => {
+            if (input) input.value = "";
+        });
+        if (serviceSelect) serviceSelect.value = "";
+        if (counter) counter.textContent = "0 characters";
+
+        document.querySelectorAll('input[name="customer"]').forEach(radio => {
+            radio.checked = false;
+        });
+        localStorage.removeItem(REVIEW_DRAFT_KEY);
+        console.log("Form submitted successfully.");
+    });
+}
+
+const reviewDeleteBtn = document.getElementById("reviewDeleteBtn");
+if (reviewDeleteBtn) {
+    reviewDeleteBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (nameInput) nameInput.value = "";
+        if (emailInput) emailInput.value = "";
+        if (reviewInput) reviewInput.value = "";
+        if (serviceSelect) serviceSelect.value = "";
+        if (feedbackMessage) feedbackMessage.textContent = "";
+        if (counter) counter.textContent = "0 characters";
+        document.querySelectorAll('input[name="customer"]').forEach(function (radio) {
+            radio.checked = false;
+        });
+        localStorage.removeItem(REVIEW_DRAFT_KEY);
+        console.log("Form cleared.");
+    });
+}
