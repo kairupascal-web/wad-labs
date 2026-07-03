@@ -1,88 +1,48 @@
 
-const images = document.querySelectorAll("img");
-
-// Welcome message
-window.onload = function () {
-    alert("WELCOME TO JUJU CARWASH!");
-};
-
-
 const services = [
     {
         name: "Body Wash",
         description: "Complete exterior body cleaning.",
-        price: "KSh 500",
-        
+        price: "KSh 500"
     },
     {
         name: "Engine Cleaning",
         description: "Professional engine cleaning service.",
-        price: "KSh 800",
-        
+        price: "KSh 800"
     },
     {
         name: "Interior Detailing",
         description: "Deep interior vacuuming and detailing.",
-        price: "KSh 1500",
-        
+        price: "KSh 1500"
     },
     {
         name: "Waxing",
         description: "Protect your paint with premium wax.",
-        price: "KSh 1200",
-        
+        price: "KSh 1200"
     },
     {
-        name:"carpet cleaning",
-        description:"cleaning of house carpets",
-        price:"KSh 1000"
+        name: "Carpet Cleaning",
+        description: "Cleaning of house carpets.",
+        price: "KSh 1000"
     },
     {
-        name:"bufferring",
-        description:"polishing of car body",
-        price:"KSh 1500"
-    },
-   
-    
-    {
-        name:"car perfumes",
-        description:"installation of car perfumes",
-        price:"KSh 500"
+        name: "Buffering",
+        description: "Polishing of car body.",
+        price: "KSh 1500"
     },
     {
-        name:"fire extinguisher ",
-        description:"installation of fire extinguisher in car",
-        price:"KSh 1000"
-
+        name: "Car Perfumes",
+        description: "Installation of car perfumes.",
+        price: "KSh 500"
+    },
+    {
+        name: "Fire Extinguisher",
+        description: "Installation of fire extinguisher in car.",
+        price: "KSh 1000"
     }
-    
-];  
-// Add titles to every image
-images.forEach(function (image) {
-    image.setAttribute("title", "JUJU CARWASH");
-});
-console.log("Image titles added.");
+];
 
-
-// Hover Effect
-
-
-images.forEach(function (image) {
-
-    image.addEventListener("mouseover", function () {
-        image.style.transform = "scale(1.05)";
-        image.style.transition = "0.3s";
-    });
-
-    image.addEventListener("mouseout", function () {
-        image.style.transform = "scale(1)";
-    });
-    console.log("Hover effect added to image:", image.src);
-
-});
-console.log("Services array initialized with " + services.length + " services.");
-
-// ===== Render Section =====
+// Render section (only)
 const container = document.getElementById("servicesContainer");
 const serviceSelect = document.getElementById("serviceSelect");
 
@@ -107,164 +67,19 @@ function renderServiceCards(serviceList, targetContainer) {
     });
 }
 
-function renderServiceOptions(serviceList, selectElement) {
-    if (!selectElement) return;
+function renderServiceOptions(serviceList, targetSelect) {
+    if (!targetSelect) return;
 
-    selectElement.innerHTML = "";
+    targetSelect.innerHTML = "";
     serviceList.forEach(service => {
         const option = document.createElement("option");
         option.value = service.name;
         option.textContent = `${service.name} - ${service.price}`;
-        selectElement.appendChild(option);
+        targetSelect.appendChild(option);
     });
 }
 
 renderServiceCards(services, container);
 renderServiceOptions(services, serviceSelect);
-// Get DOM elements
-const heading = document.getElementById("mainHeading");
-const sections = document.querySelectorAll("section");
-
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const reviewInput = document.getElementById("review");
-const submitBtn = document.getElementById("reviewSubmitBtn");
-const feedbackMessage = document.getElementById("inputFeedback");
-const counter = document.getElementById("counter");
-const customerRadios = document.querySelectorAll('input[name="customer"]');
-
-function showFeedback(message, isError = true) {
-    if (feedbackMessage) {
-        feedbackMessage.textContent = message;
-        feedbackMessage.style.color = isError ? "red" : "green";
-        feedbackMessage.style.fontWeight = "bold";
-    }
-}
-
-[nameInput, emailInput, reviewInput].forEach(function (input) {
-    if (input) {
-        input.addEventListener("input", function () {
-            if (feedbackMessage && feedbackMessage.textContent !== "") {
-                feedbackMessage.textContent = "";
-            }
-        });
-    }
-});
-
-if (serviceSelect) {
-    serviceSelect.addEventListener("change", function () {
-        if (feedbackMessage && feedbackMessage.textContent !== "") {
-            feedbackMessage.textContent = "";
-        }
-    });
-}
-
-customerRadios.forEach(function (radio) {
-    radio.addEventListener("change", function () {
-        if (feedbackMessage && feedbackMessage.textContent !== "") {
-            feedbackMessage.textContent = "";
-        }
-    });
-});
-
-if (reviewInput && counter) {
-    counter.textContent = reviewInput.value.length + " characters";
-    reviewInput.addEventListener("input", function () {
-        counter.textContent = reviewInput.value.length + " characters";
-    });
-}
-
-console.log(heading);
-console.log(sections);
-console.log(images);
-
-
-
-
-
-// Change heading colour when clicked
-if (heading) {
-    heading.addEventListener("click", function () {
-        heading.style.color = "blue";
-    });
-}
-
-
-
-if (submitBtn) {
-    submitBtn.addEventListener("click", function (event) {
-        event.preventDefault();
-        const requiredFields = [nameInput, emailInput, reviewInput];
-        const hasEmptyField = requiredFields.some(input => !input || input.value.trim() === "");
-        const selectedService = serviceSelect ? serviceSelect.value : "";
-        const selectedCustomer = document.querySelector('input[name="customer"]:checked');
-
-        if (emailInput && emailInput.value.trim() !== "" && !emailInput.checkValidity()) {
-            showFeedback("Please enter a valid email address.");
-            return;
-        }
-
-        if (hasEmptyField || selectedService.trim() === "" || !selectedCustomer) {
-            showFeedback("Please fill in all the fields before submitting.");
-            return;
-        }
-
-        showFeedback(`Thank you ${nameInput.value.trim()}! Your review for ${selectedService} has been received.`, false);
-        requiredFields.forEach(input => {
-            if (input) input.value = "";
-        });
-        if (serviceSelect) serviceSelect.value = "";
-        if (counter) counter.textContent = "0 characters";
-
-        customerRadios.forEach(radio => {
-            radio.checked = false;
-        });
-        console.log("Form submitted successfully.");
-    });
-}
-
-const reviewDeleteBtn = document.getElementById("reviewDeleteBtn");
-if (reviewDeleteBtn) {
-    reviewDeleteBtn.addEventListener("click", function (event) {
-        event.preventDefault();
-        if (nameInput) nameInput.value = "";
-        if (emailInput) emailInput.value = "";
-        if (reviewInput) reviewInput.value = "";
-        if (serviceSelect) serviceSelect.value = "";
-        if (feedbackMessage) feedbackMessage.textContent = "";
-        if (counter) counter.textContent = "0 characters";
-        customerRadios.forEach(function (radio) {
-            radio.checked = false;
-        });
-        console.log("Form cleared.");
-    });
-}
-
-
-document.addEventListener("keydown", function (event) {
-
-    console.log("Key Pressed: " + event.key);
-
-});
-
-//smooth scrolling for navigation links
-document.querySelectorAll("nav a").forEach(link => {
-    link.addEventListener("click", event => {
-        event.preventDefault();
-        const target = document.querySelector(link.getAttribute("href"));
-        if (target) target.scrollIntoView({ behavior: "smooth" });
-    });
-    console.log("Smooth scrolling added for link:", link.href);
-});
-
-document.querySelectorAll(".gallery-image").forEach(image => {
-    image.addEventListener("mouseover", () => {
-        image.style.transform = "scale(1.05)";
-    });
-    image.addEventListener("mouseout", () => {
-        image.style.transform = "scale(1)";
-    });
-    console.log("Hover effect added to image:", image.src);
-});
 
 
