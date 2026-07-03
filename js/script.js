@@ -1,48 +1,4 @@
 
-const services = [
-    {
-        name: "Body Wash",
-        description: "Complete exterior body cleaning.",
-        price: "KSh 500"
-    },
-    {
-        name: "Engine Cleaning",
-        description: "Professional engine cleaning service.",
-        price: "KSh 800"
-    },
-    {
-        name: "Interior Detailing",
-        description: "Deep interior vacuuming and detailing.",
-        price: "KSh 1500"
-    },
-    {
-        name: "Waxing",
-        description: "Protect your paint with premium wax.",
-        price: "KSh 1200"
-    },
-    {
-        name: "Carpet Cleaning",
-        description: "Cleaning of house carpets.",
-        price: "KSh 1000"
-    },
-    {
-        name: "Buffering",
-        description: "Polishing of car body.",
-        price: "KSh 1500"
-    },
-    {
-        name: "Car Perfumes",
-        description: "Installation of car perfumes.",
-        price: "KSh 500"
-    },
-    {
-        name: "Fire Extinguisher",
-        description: "Installation of fire extinguisher in car.",
-        price: "KSh 1000"
-    }
-];
-
-// Render section (only)
 const container = document.getElementById("servicesContainer");
 const serviceSelect = document.getElementById("serviceSelect");
 
@@ -67,19 +23,17 @@ function renderServiceCards(serviceList, targetContainer) {
     });
 }
 
-function renderServiceOptions(serviceList, targetSelect) {
-    if (!targetSelect) return;
+function renderServiceOptions(serviceList, selectElement) {
+    if (!selectElement) return;
 
-    targetSelect.innerHTML = "";
+    selectElement.innerHTML = "";
     serviceList.forEach(service => {
         const option = document.createElement("option");
         option.value = service.name;
         option.textContent = `${service.name} - ${service.price}`;
-        targetSelect.appendChild(option);
+        selectElement.appendChild(option);
     });
 }
 
 renderServiceCards(services, container);
 renderServiceOptions(services, serviceSelect);
-
-
