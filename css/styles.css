@@ -24,6 +24,14 @@ body{
     background: rgba(255, 255, 255, 0.92);
 }
 
+#reviews{
+    max-width: 1100px;
+    margin: 20px auto 0;
+    padding: 24px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.92);
+}
+
 h3{
     text-align: center;
     margin: 0 0 20px;
@@ -135,6 +143,16 @@ h3{
 .service-feedback{
     margin: 10px 0 0;
     font-weight: 700;
+}
+
+.feedback-message{
+    margin: 10px 0 0;
+    font-weight: 700;
+}
+
+#counter{
+    font-size: 0.95rem;
+    color: #444;
 }
 
 @media screen and (max-width: 730px) {
