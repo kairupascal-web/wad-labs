@@ -174,3 +174,105 @@ let createElement = function(){
 let removeElement = function(){
     button.remove();
 }
+// Get DOM elements
+const heading = document.getElementById("mainHeading");
+const sections = document.querySelectorAll("section");
+
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const reviewInput = document.getElementById("review");
+const submitBtn = document.getElementById("reviewSubmitBtn");
+const feedbackMessage = document.getElementById("inputFeedback");
+const counter = document.getElementById("counter");
+const customerRadios = document.querySelectorAll('input[name="customer"]');
+
+function showFeedback(message, isError = true) {
+    if (feedbackMessage) {
+        feedbackMessage.textContent = message;
+        feedbackMessage.style.color = isError ? "red" : "green";
+        feedbackMessage.style.fontWeight = "bold";
+    }
+}
+
+[nameInput, emailInput, reviewInput].forEach(function (input) {
+    if (input) {
+        input.addEventListener("input", function () {
+            if (feedbackMessage && feedbackMessage.textContent !== "") {
+                feedbackMessage.textContent = "";
+            }
+        });
+    }
+});
+
+if (serviceSelect) {
+    serviceSelect.addEventListener("change", function () {
+        if (feedbackMessage && feedbackMessage.textContent !== "") {
+            feedbackMessage.textContent = "";
+        }
+    });
+}
+
+customerRadios.forEach(function (radio) {
+    radio.addEventListener("change", function () {
+        if (feedbackMessage && feedbackMessage.textContent !== "") {
+            feedbackMessage.textContent = "";
+        }
+    });
+});
+
+if (reviewInput && counter) {
+    counter.textContent = reviewInput.value.length + " characters";
+    reviewInput.addEventListener("input", function () {
+        counter.textContent = reviewInput.value.length + " characters";
+    });
+}
+
+console.log(heading);
+console.log(sections);
+console.log(images);
+
+
+
+
+
+// Change heading colour when clicked
+if (heading) {
+    heading.addEventListener("click", function () {
+        heading.style.color = "blue";
+    });
+}
+
+
+
+if (submitBtn) {
+    submitBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        const requiredFields = [nameInput, emailInput, reviewInput];
+        const hasEmptyField = requiredFields.some(input => !input || input.value.trim() === "");
+        const selectedService = serviceSelect ? serviceSelect.value : "";
+        const selectedCustomer = document.querySelector('input[name="customer"]:checked');
+
+        if (emailInput && emailInput.value.trim() !== "" && !emailInput.checkValidity()) {
+            showFeedback("Please enter a valid email address.");
+            return;
+        }
+
+        if (hasEmptyField || selectedService.trim() === "" || !selectedCustomer) {
+            showFeedback("Please fill in all the fields before submitting.");
+            return;
+        }
+
+        showFeedback(`Thank you ${nameInput.value.trim()}! Your review for ${selectedService} has been received.`, false);
+        requiredFields.forEach(input => {
+            if (input) input.value = "";
+        });
+        if (serviceSelect) serviceSelect.value = "";
+        if (counter) counter.textContent = "0 characters";
+
+        customerRadios.forEach(radio => {
+            radio.checked = false;
+        });
+        console.log("Form submitted successfully.");
+    });
+}
+
