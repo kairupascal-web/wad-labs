@@ -1,57 +1,92 @@
+const serviceSelect = document.getElementById("serviceSelect");
 
 const services = [
+
     {
-        name: "Body Wash",
-        description: "Complete exterior body cleaning.",
-        price: "KSh 500"
+        name:"Body Wash",
+        description:"Complete exterior body cleaning.",
+        price:"KSh 500"
     },
+
     {
-        name: "Engine Cleaning",
-        description: "Professional engine cleaning service.",
-        price: "KSh 800"
+        name:"Engine Cleaning",
+        description:"Professional engine cleaning service.",
+        price:"KSh 800"
     },
+
     {
-        name: "Interior Detailing",
-        description: "Deep interior vacuuming and detailing.",
-        price: "KSh 1500"
+        name:"Interior Detailing",
+        description:"Deep interior vacuuming and detailing.",
+        price:"KSh 1500"
     },
+
     {
-        name: "Waxing",
-        description: "Protect your paint with premium wax.",
-        price: "KSh 1200"
-    },
-    {
-        name: "Carpet Cleaning",
-        description: "Cleaning of house carpets",
-        price: "KSh 1000"
-    },
-    {
-        name: "Buffering",
-        description: "Polishing of car body",
-        price: "KSh 1500"
-    },
-    {
-        name: "Car Perfumes",
-        description: "Installation of car perfumes",
-        price: "KSh 500"
-    },
-    {
-        name: "Fire Extinguisher",
-        description: "Installation of fire extinguisher in car",
-        price: "KSh 1000"
+        name:"Waxing",
+        description:"Protect your paint with premium wax.",
+        price:"KSh 1200"
     }
+
 ];
 
-
+if (serviceSelect) {
+    // Prevent duplicate options if script runs more than once
+    serviceSelect.querySelectorAll("option[data-generated='true']").forEach(option => option.remove());
+    services.forEach(service => {
+        const option = document.createElement("option");
+        option.value = service.name;
+        option.textContent = `${service.name} - ${service.price}`;
+        option.setAttribute("data-generated", "true");
+        serviceSelect.appendChild(option);
+    });
+}
 
 const container = document.getElementById("servicesContainer");
-const serviceSelect = document.getElementById("serviceSelect");
-const addServiceBtn = document.getElementById("addServiceBtn");
-const removeSelectedBtn = document.getElementById("removeSelectedBtn");
-const newServiceName = document.getElementById("newServiceName");
-const newServiceDescription = document.getElementById("newServiceDescription");
-const newServicePrice = document.getElementById("newServicePrice");
-const serviceFeedback = document.getElementById("serviceFeedback");
+
+if (container) {
+    services.forEach(function(service){
+
+        let card = document.createElement("div");
+
+        card.classList.add("service-card");
+
+        card.innerHTML =
+
+        `
+        <div class="service-title">
+            <h3>${service.name}</h3>
+        </div>
+
+        <div class="service-info">
+
+            <p>${service.description}</p>
+
+            <h2 class="service-price">${service.price}</h2>
+
+            <button class="book-service-btn" type="button">Book Service</button>
+
+        </div>
+        `;
+
+        container.appendChild(card);
+
+    });
+}
+
+document.querySelectorAll(".book-service-btn").forEach(button => {
+    button.style.transition = "transform .2s ease, box-shadow .2s ease";
+    button.addEventListener("mouseenter", function () {
+        button.style.transform = "translateY(-2px)";
+        button.style.boxShadow = "0 6px 14px rgba(0,0,0,.18)";
+    });
+    button.addEventListener("mouseleave", function () {
+        button.style.transform = "translateY(0)";
+        button.style.boxShadow = "none";
+    });
+});
+// Get DOM elements
+const heading = document.getElementById("mainHeading");
+const sections = document.querySelectorAll("section");
+
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
 const reviewInput = document.getElementById("review");
@@ -59,123 +94,15 @@ const submitBtn = document.getElementById("reviewSubmitBtn");
 const feedbackMessage = document.getElementById("inputFeedback");
 const counter = document.getElementById("counter");
 const customerRadios = document.querySelectorAll('input[name="customer"]');
-const reviewDeleteBtn = document.getElementById("reviewDeleteBtn");
-const ownerImage = document.getElementById("ownerImage");
-const ownerInfo = document.getElementById("ownerInfo");
+
+const REVIEW_DRAFT_KEY = "reviewFormDraft";
 
 function showFeedback(message, isError = true) {
-    if (!serviceFeedback) return;
-
-    serviceFeedback.textContent = message;
-    serviceFeedback.style.color = isError ? "#cc0000" : "#117a37";
-}
-
-function showFormFeedback(message, isError = true) {
-    if (!feedbackMessage) return;
-
-    feedbackMessage.textContent = message;
-    feedbackMessage.style.color = isError ? "red" : "green";
-    feedbackMessage.style.fontWeight = "bold";
-}
-
-function renderServiceCards(serviceList, targetContainer) {
-    if (!targetContainer) return;
-
-    targetContainer.innerHTML = "";
-    serviceList.forEach((service, index) => {
-        const card = document.createElement("div");
-        card.className = "service-card";
-        card.innerHTML = `
-            <div class="service-title">
-                <h3>${service.name}</h3>
-            </div>
-            <div class="service-info">
-                <p>${service.description}</p>
-                <h2 class="service-price">${service.price}</h2>
-                <div class="service-actions">
-                    <button type="button">Book Service</button>
-                    <button type="button" class="remove-service-btn" data-index="${index}">Remove</button>
-                </div>
-            </div>
-        `;
-        targetContainer.appendChild(card);
-    });
-}
-
-function renderServiceOptions(serviceList, targetSelect) {
-    if (!targetSelect) return;
-
-    targetSelect.innerHTML = '<option value="">Select a service</option>';
-
-    serviceList.forEach(service => {
-        const option = document.createElement("option");
-        option.value = service.name;
-        option.textContent = `${service.name} - ${service.price}`;
-        targetSelect.appendChild(option);
-    });
-}
-
-function refreshUI() {
-    renderServiceCards(services, container);
-    renderServiceOptions(services, serviceSelect);
-}
-
-if (container) {
-    container.addEventListener("click", function (event) {
-        const target = event.target;
-        if (!(target instanceof HTMLElement)) return;
-
-        if (target.classList.contains("remove-service-btn")) {
-            const index = Number(target.dataset.index);
-            if (Number.isNaN(index)) return;
-
-            services.splice(index, 1);
-            refreshUI();
-            showFeedback("Service removed.", false);
-        }
-    });
-}
-
-if (addServiceBtn) {
-    addServiceBtn.addEventListener("click", function () {
-        const name = newServiceName ? newServiceName.value.trim() : "";
-        const description = newServiceDescription ? newServiceDescription.value.trim() : "";
-        const price = newServicePrice ? newServicePrice.value.trim() : "";
-
-        if (!name || !description || !price) {
-            showFeedback("Please fill in all fields before adding a service.");
-            return;
-        }
-
-        services.push({ name, description, price });
-        refreshUI();
-        showFeedback("Service added successfully.", false);
-
-        if (newServiceName) newServiceName.value = "";
-        if (newServiceDescription) newServiceDescription.value = "";
-        if (newServicePrice) newServicePrice.value = "";
-    });
-}
-
-if (removeSelectedBtn && serviceSelect) {
-    removeSelectedBtn.addEventListener("click", function () {
-        const selectedName = serviceSelect.value;
-
-        if (!selectedName) {
-            showFeedback("Select a service first.");
-            return;
-        }
-
-        const index = services.findIndex(service => service.name === selectedName);
-        if (index === -1) {
-            showFeedback("Service not found.");
-            return;
-        }
-
-        services.splice(index, 1);
-        refreshUI();
-        showFeedback("Selected service removed.", false);
-    });
+    if (feedbackMessage) {
+        feedbackMessage.textContent = message;
+        feedbackMessage.style.color = isError ? "red" : "green";
+        feedbackMessage.style.fontWeight = "bold";
+    }
 }
 
 [nameInput, emailInput, reviewInput].forEach(function (input) {
@@ -184,6 +111,7 @@ if (removeSelectedBtn && serviceSelect) {
             if (feedbackMessage && feedbackMessage.textContent !== "") {
                 feedbackMessage.textContent = "";
             }
+            saveFormDraft();
         });
     }
 });
@@ -193,6 +121,7 @@ if (serviceSelect) {
         if (feedbackMessage && feedbackMessage.textContent !== "") {
             feedbackMessage.textContent = "";
         }
+        saveFormDraft();
     });
 }
 
@@ -201,6 +130,7 @@ customerRadios.forEach(function (radio) {
         if (feedbackMessage && feedbackMessage.textContent !== "") {
             feedbackMessage.textContent = "";
         }
+        saveFormDraft();
     });
 });
 
@@ -211,62 +141,166 @@ if (reviewInput && counter) {
     });
 }
 
-if (submitBtn) {
-    submitBtn.addEventListener("click", function (event) {
-        event.preventDefault();
+function getSelectedCustomerValue() {
+    const selected = document.querySelector('input[name="customer"]:checked');
+    return selected ? selected.value : "";
+}
 
-        const requiredFields = [nameInput, emailInput, reviewInput];
-        const hasEmptyField = requiredFields.some(input => !input || input.value.trim() === "");
-        const selectedService = serviceSelect ? serviceSelect.value : "";
-        const selectedCustomer = document.querySelector('input[name="customer"]:checked');
+function saveFormDraft() {
+    const draft = {
+        name: nameInput ? nameInput.value : "",
+        email: emailInput ? emailInput.value : "",
+        review: reviewInput ? reviewInput.value : "",
+        service: serviceSelect ? serviceSelect.value : "",
+        customer: getSelectedCustomerValue()
+    };
+    localStorage.setItem(REVIEW_DRAFT_KEY, JSON.stringify(draft));
+}
 
-        if (emailInput && emailInput.value.trim() !== "" && !emailInput.checkValidity()) {
-            showFormFeedback("Please enter a valid email address.");
-            return;
-        }
+function loadFormDraft() {
+    const saved = localStorage.getItem(REVIEW_DRAFT_KEY);
+    if (!saved) return;
 
-        if (hasEmptyField || selectedService.trim() === "" || !selectedCustomer) {
-            showFormFeedback("Please fill in all the fields before submitting.");
-            return;
-        }
-
-        showFormFeedback(`Thank you ${nameInput.value.trim()}! Your review for ${selectedService} has been received.`, false);
-
-        requiredFields.forEach(input => {
-            if (input) input.value = "";
-        });
-
-        if (serviceSelect) serviceSelect.value = "";
-        if (counter) counter.textContent = "0 characters";
-
+    try {
+        const draft = JSON.parse(saved);
+        if (nameInput) nameInput.value = draft.name || "";
+        if (emailInput) emailInput.value = draft.email || "";
+        if (reviewInput) reviewInput.value = draft.review || "";
+        if (serviceSelect) serviceSelect.value = draft.service || "";
         customerRadios.forEach(radio => {
-            radio.checked = false;
+            radio.checked = (radio.value === (draft.customer || ""));
         });
+        if (counter && reviewInput) {
+            counter.textContent = reviewInput.value.length + " characters";
+        }
+    } catch (error) {
+        localStorage.removeItem(REVIEW_DRAFT_KEY);
+    }
+}
+
+loadFormDraft();
+
+console.log(heading);
+console.log(sections);
+
+
+
+
+
+// Change heading colour when clicked
+if (heading) {
+    heading.addEventListener("click", function () {
+        heading.style.color = "blue";
     });
 }
 
+
+
+if (submitBtn) {
+    submitBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        const requiredFields = [nameInput, emailInput, reviewInput];
+        const hasEmptyField = requiredFields.some(input => !input || input.value.trim() === "");
+        const selectedService = serviceSelect ? serviceSelect.value : "";
+        const selectedCustomer = getSelectedCustomerValue();
+
+        if (hasEmptyField || selectedService.trim() === "" || selectedCustomer === "") {
+            showFeedback("Please fill in all fields and select service + customer type before submitting.");
+            return;
+        }
+
+        if (emailInput && !emailInput.checkValidity()) {
+            showFeedback("Please enter a valid email address.");
+            return;
+        }
+
+        showFeedback(`Thank you ${nameInput.value.trim()}! Your review for ${selectedService} has been received.`, false);
+        requiredFields.forEach(input => {
+            if (input) input.value = "";
+        });
+        if (serviceSelect) serviceSelect.value = "";
+        if (counter) counter.textContent = "0 characters";
+
+        document.querySelectorAll('input[name="customer"]').forEach(radio => {
+            radio.checked = false;
+        });
+        localStorage.removeItem(REVIEW_DRAFT_KEY);
+        console.log("Form submitted successfully.");
+    });
+}
+
+const reviewDeleteBtn = document.getElementById("reviewDeleteBtn");
 if (reviewDeleteBtn) {
     reviewDeleteBtn.addEventListener("click", function (event) {
         event.preventDefault();
-
         if (nameInput) nameInput.value = "";
         if (emailInput) emailInput.value = "";
         if (reviewInput) reviewInput.value = "";
         if (serviceSelect) serviceSelect.value = "";
         if (feedbackMessage) feedbackMessage.textContent = "";
         if (counter) counter.textContent = "0 characters";
-
-        customerRadios.forEach(function (radio) {
+        document.querySelectorAll('input[name="customer"]').forEach(function (radio) {
             radio.checked = false;
         });
+        localStorage.removeItem(REVIEW_DRAFT_KEY);
+        console.log("Form cleared.");
     });
+}
+
+
+document.addEventListener("keydown", function (event) {
+
+    console.log("Key Pressed: " + event.key);
+
+});
+
+//smooth scrolling for navigation links
+document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", event => {
+        event.preventDefault();
+        const target = document.querySelector(link.getAttribute("href"));
+        if (target) target.scrollIntoView({ behavior: "smooth" });
+    });
+    console.log("Smooth scrolling added for link:", link.href);
+});
+
+document.querySelectorAll(".gallery-image").forEach(image => {
+    image.addEventListener("mouseover", () => {
+        image.style.transform = "scale(1.05)";
+    });
+    image.addEventListener("mouseout", () => {
+        image.style.transform = "scale(1)";
+    });
+    console.log("Hover effect added to image:", image.src);
+});
+const ownerImage = document.getElementById("ownerImage");
+const ownerInfo = document.getElementById("ownerInfo");
+
+// Only run owner-bio logic when the related elements exist to avoid runtime errors
+if (ownerInfo && localStorage.getItem("ownerBio") === "show") {
+    ownerInfo.textContent = "Founder: Judy Gathongo. Established JUJU CARWASH in 2020.";
 }
 
 if (ownerImage && ownerInfo) {
-    ownerImage.addEventListener("click", function () {
-        const isHidden = ownerInfo.style.display === "" || ownerInfo.style.display === "none";
-        ownerInfo.style.display = isHidden ? "block" : "none";
+    ownerImage.style.transition = "transform .2s ease, box-shadow .2s ease";
+    ownerImage.addEventListener("mouseenter", function () {
+        ownerImage.style.transform = "scale(1.02)";
+        ownerImage.style.boxShadow = "0 8px 18px rgba(0,0,0,.2)";
     });
-}
+    ownerImage.addEventListener("mouseleave", function () {
+        ownerImage.style.transform = "scale(1)";
+        ownerImage.style.boxShadow = "none";
+    });
 
-refreshUI();
+    ownerImage.addEventListener("click", function () {
+        if (localStorage.getItem("ownerBio") === "show") {
+            ownerInfo.textContent = "";
+            localStorage.removeItem("ownerBio");
+        } else {
+            ownerInfo.textContent = "Founder: Judy Gathongo. Established JUJU CARWASH in 2020.";
+            localStorage.setItem("ownerBio", "show");
+        }
+
+    });
+    console.log("Owner bio toggle functionality initialized.");
+}
