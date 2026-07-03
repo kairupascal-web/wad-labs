@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <title>html forms 101</title>
+        <!--link to an external stylesheet-->
+        <link rel="stylesheet"href="css/style.css">
+    </head>
+    <body>
+        <section id="simple form">
+            <h2>simple form</h2>
+            <!--form-receiving user input-->
+<form>
+                <!--input text-->
+                <label>username</label>
+                <input type="text"name="username">
+
+                <!--            text area-->
+                <label>opinion</label>
+                <textarea name="opinion">
+                </textarea>
+
+                <!--submit input(button)-->
+                <input type ="submit"value="submit form">
+              </form>
+        </section>
+        <section id="registration">
+        <h2>Registration-form</h2>
+        <form id="reg-form" name="reg-form"
+        method="get" action="post.php">
+        
+        <div class="form-group">
+            <label id="fname">first name</label>
+            <input type="text" name="fname" id="fname">
+
+        </div>
+        <div class="form-group">
+            <label id="Lname">lastname</label>
+            <input type="text" name="Lname" id="Lname">
+           </div>
+           <div class="form-group">
+            <label id="email">Email</label>
+            <input type="email" name="email" id="email">
+           </div>
+           <div class="form-group">
+            <label id="national-ID">National ID</label>
+            <input type="number" name="national-ID" id="national-ID">
+           </div>
+           <div class="form-group">
+            <label id="gender">Gender</label>
+            <input type="radio" name="gender" value="0" >Male
+            <br>
+            <input type="radio" name="gender" value="1">Female
+           </div>
+           <div class="form-group">
+            <label id="Age">Age</label>
+            <input type="radio" name="age" value="0" >under 18
+            <br>
+            <input type="radio" name="age" value="1">18 and above
+           </div>
+           <div class="form-group">
+            <label id="participant-type">Participant Type</label>
+            <input type="radio" name="participant type" value="0" >spectator
+            <br>
+            <input type="radio" name="participant type" value="1">racer
+           </div>
+           <div class="form-group">
+            <label id="snacks">Post Race Snacks</label>
+            <input type="checkbox" name="snacks[]" value="watermelon" >Water Melon
+            <br>
+            <input type="checkbox" name="snacks[]" value="banana">Banana
+           </div>
+           <div class="">
+        <label id="university">University</label>
+        <select name="university" name="university">
+            <option value="strathmore">Strathmore University</option>
+            <option value="jkuat">JKUAT</option>
+            <option value="usiu">USIU</option>
+            <option value="other">Other</option>
+        </select>
+
+
+    </div>
+           <div class="form-group">
+            <input type="submit" name="submit" value="submit">
+            <input type="reset" name="reset" value="clear">
+           </div>
+
+
+
+
+
+
+         </form>
+        </section>
+    </body>
+</html>
