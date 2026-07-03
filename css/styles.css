@@ -26,19 +26,6 @@ body{
 
 }
 
-#ownerImage{
-    cursor: pointer;
-    display: inline-block;
-    max-width: 30%;
-    max-height: 10%;
-    height: 300px;
-}
-
-#ownerInfo{
-    font-weight: bold;
-    color: var(--primary);
-    margin-top: 10px;
-}
 
 /* Services Grid */
 .services-grid{
@@ -111,11 +98,7 @@ h3{
     background: var(--accent);
     outline: none;
 }
-.stars,
-.star{
-    color: gold;
-    font-size: 1.2rem;
-}
+
 
 .gallery-image{
     width: 100%;
@@ -127,7 +110,7 @@ h3{
     transition: transform .3s ease;
 }
 
-.gallery-image:hover{ transform: scale(1.05); }
+
 
 img{ max-width: 100%; height: auto; border-radius: 15px; border: 3px solid var(--primary); }
 
