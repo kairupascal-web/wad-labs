@@ -1,4 +1,3 @@
-
 :root{
     --primary: #0033cc;
     --accent: #cc0000;
@@ -8,8 +7,8 @@
 html{ scroll-behavior: smooth; }
 
 body{
-    /* Replace with a project-relative image path (images/bg.jpg) */
-    background-image: url("images/bg.jpg");
+    
+    background-image: url("../images/background.jpeg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -92,6 +91,19 @@ h3{
     cursor: pointer;
     font-size: 16px;
     
+}
+
+.service-actions{
+    display: flex;
+    gap: 10px;
+}
+
+.service-actions button{
+    flex: 1;
+}
+
+.remove-service-btn{
+    background: #666;
 }
 
 .service-card button:hover,

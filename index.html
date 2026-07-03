@@ -98,15 +98,15 @@
         <section id="features">
             
             <h3 id="services">SERVICES AND CAR ACCESSORIES</h3>
-            <ul id="servicesList"></ul>
-
-             
-           
-            
-             <div id="servicesContainer" class="services-grid"></div>
-            
-            
-           
+            <div id="car-accessories">
+                <div id="servicesContainer" class="services-grid"></div>
+                <div class="form-group">
+                    <label for="serviceSelect">Service:</label>
+                    <select id="serviceSelect" name="service">
+                        <option value="">Select a service</option>
+                    </select>
+                </div>
+            </div>
         </section>
         <section id="reviews">
             <h2>REVIEWS</h2>
@@ -114,12 +114,15 @@
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name">
             </div>
+            
+            
+           
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email">
             </div>
             <div class="form-group">
-                <label id="customer">customer</label>
+                <label id="customerLabel">Customer:</label>
                 <input type="radio" name="customer" value="0">car owner
                 <input type="radio" name="customer" value="1">car wash attendant
                 <input type="radio" name="customer" value="2">carpet owner
