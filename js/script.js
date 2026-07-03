@@ -144,3 +144,26 @@ if (container) {
     });
 }
 
+if (serviceSelect) {
+    services.forEach(service => {
+        const option = document.createElement("option");
+        option.value = service.name;
+        option.textContent = `${service.name} - ${service.price}`;
+        serviceSelect.appendChild(option);
+    });
+}
+let createElement = function(){
+    const button = document.createElement("button");
+    button.innerHTML = "Book Service";
+    button.style.backgroundColor = "blue";
+    button.style.color = "white";
+    button.style.padding = "10px 20px";
+    button.style.border = "none";
+    button.style.borderRadius = "5px";
+    button.style.cursor = "pointer";
+
+}
+let removeElement = function(){
+    const button = document.querySelector("button");
+    if (button) button.remove();
+}
