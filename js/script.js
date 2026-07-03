@@ -22,22 +22,22 @@ const services = [
     },
     {
         name: "Carpet Cleaning",
-        description: "Cleaning of house carpets.",
+        description: "Cleaning of house carpets",
         price: "KSh 1000"
     },
     {
         name: "Buffering",
-        description: "Polishing of car body.",
+        description: "Polishing of car body",
         price: "KSh 1500"
     },
     {
         name: "Car Perfumes",
-        description: "Installation of car perfumes.",
+        description: "Installation of car perfumes",
         price: "KSh 500"
     },
     {
         name: "Fire Extinguisher",
-        description: "Installation of fire extinguisher in car.",
+        description: "Installation of fire extinguisher in car",
         price: "KSh 1000"
     }
 ];
